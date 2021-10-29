@@ -1,99 +1,45 @@
-/* 
-// Étape 1
-class Clock extends React.Component {
-    render() {
-      return (
-        <div>
-          <h1>Bonjour, monde !</h1>
-          <h2>Il est {this.props.date.toLocaleTimeString()}.</h2>
-        </div>
-      );
-    }
-  }
-
-ReactDOM.render(<Clock date={new Date()}/>, document.querySelector('#app')); 
-
-*/
-
-
-/* 
-
-// Étape 2
-
-class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date()};
-    }
-  render() {
-    return (
-      <div>
-        <h1>Bonjour, monde !</h1>
-        <h2>Il est {this.state.date.toLocaleTimeString()}.</h2>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<Clock />, document.querySelector('#app')); 
-
-
- */
-
-
-
-// Étape 3
-
-/* class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date()};
-    }
-    componentDidMount() {
-        this.timerID = setInterval(() => this.tick(),1000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        })
-    }
-
-    render() {
-        return (
-        <div>
-            <h1>Bonjour, monde !</h1>
-            <h2>Il est {this.state.date.toLocaleTimeString()}.</h2>
-        </div>
-        );
-    }
-}
-
-ReactDOM.render(<Clock />, document.querySelector('#app'));  */
-
-
 function Clock(props) {
+    const [date, setDate] = React.useState(new Date());
+    const [color, setColor] = React.useState('black');
+    const intervalRef = React.useRef();
+
     React.useEffect(() => {
         tick();        
     }, []);
     
-    const [date, setDate] = React.useState(new Date());
-
     const tick = () => {
-        setInterval(() => {
-            setDate(new Date())
-        }, 1000)
+        intervalRef.current = setInterval(() => setDate(new Date()), 1000);
+    }
+
+    // change a couleur du h2 de facon aleatoire
+    function changeColor(){
+        setColor(newColor());
+    }
+
+// recuperation de moncanvas
+    function newColor(){
+        let red = Math.floor(Math.random() * 255);
+        let green = Math.floor(Math.random() * 255);
+        let blue = Math.floor(Math.random() * 255);
+        return 'rgb(' + red + ',' + green + ',' + blue + ')';        
+    }
+
+    function blackColor(){
+        setColor("black");
+    }
+
+    const stopTime = () => {
+        clearInterval(intervalRef.current);
     }
     
-
     return (
         <div>
             <h1>Hello world</h1>
-            <h2>Il est {date.toLocaleTimeString()}.</h2>
+            <h2 style={{color: color}}>Il est {date.toLocaleTimeString()}.</h2>
+            <button onClick={changeColor}>Change color</button>
+            <button onClick={blackColor}>Black color</button>
+            <button onClick={tick}>ReStart</button>
+            <button onClick={stopTime}>Stop</button>
         </div>
         );
 }
