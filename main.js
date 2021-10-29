@@ -1,86 +1,34 @@
-function NameForm(){
-  const [name, setName] = React.useState();
+// Correction exo9
+function App() {
+  const [inputs, setInputs] = React.useState({
+    text : '',
+    essay: '',
+    flavor : 'mango'
+  })
 
-  const handleChange = (event) =>{
-    setName(event.target.value);
+  const handleChange = (e) => {
+    e.preventDefault();
+    let { name, value} = e.target
+    setInputs(previousState => ({
+      ...previousState,
+      [name] : value
+    }))
   }
 
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    alert('Le nom a été soumis : ' + name);
-  }
-
-    return (
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nom :
-          <input type="text" onChange={handleChange} />
-        </label>
-        <input type="submit" value="Envoyer" />
-      </form>
-    );
-}
-
-function TextArea(){
-
-  const [text, setText] = React.useState();
-
-  const handleChange = (event) =>{
-    setText(event.target.value);
-  }
-
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    alert('Le nom a été soumis : ' + text);
-  }
-
-  return(
-    <form onSubmit={handleSubmit}>
-        <label>
-          Essay:
-          <textarea  onChange={handleChange} />
-        </label>
-        <input type="submit" value="Envoyer" />
-    </form>
-  )
-}
-
-function SelectForm(){
-  const [select, setSelect] = React.useState();
-
-  const handleChange = (event) =>{
-    setSelect(event.target.value);
-  }
-
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    alert('Le nom a été soumis : ' + select);
-  }
-
-  return(
-    <form onSubmit={handleSubmit}>
-        <label>
-          Choisissez votre parfum favori :
-          <select onChange={handleChange}>
-            <option value="grapefruit">Pamplemousse</option>
-            <option value="lime">Citron vert</option>
-            <option value="coconut">Noix de coco</option>
-            <option value="mango">Mangue</option>
-          </select>
-        </label>
-        <input type="submit" value="Envoyer" />
-      </form>
-  )
-}
-
-function App(){
-  return(
+  return (
     <React.Fragment>
-      <NameForm />
-      <TextArea />
-      <SelectForm />
-    </React.Fragment> 
+      <label><input type="text" name="text" value={inputs.text} onChange={handleChange} /></label>
+      <label><textarea name="essay" value={inputs.essay} onChange={handleChange}></textarea></label>
+      <label>
+        <select name="flavor" value={inputs.flavor} onChange={handleChange}>
+          <option value="grapefruit">Pamplemousse</option>
+          <option value="lime">Citron vert</option>
+          <option value="coconut">Noix de coco</option>
+          <option value="mango">Mangue</option>
+        </select>
+      </label>
+    </React.Fragment>
   )
 }
 
-ReactDOM.render(<App/>, document.querySelector('#app'))
+ReactDOM.render(<App />, document.querySelector("#app"));
