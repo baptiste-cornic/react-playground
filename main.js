@@ -1,37 +1,86 @@
-function App(props) {
-    React.useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json())
-        .then(usersObject => setUsers(usersObject))
-    }, [])
+function NameForm(){
+  const [name, setName] = React.useState();
 
-    const [users, setUsers] = React.useState([]);
+  const handleChange = (event) =>{
+    setName(event.target.value);
+  }
 
-
-
-    return(
-        <React.Fragment>
-        {
-            users.map((u) =>(
-                <UserCard key={u.id} user={u}/>
-            ))
-        }
-        </React.Fragment>
-    )
-}
-
-function UserCard({user}) {
-    
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    alert('Le nom a été soumis : ' + name);
+  }
 
     return (
-        <ul className="user-card">
-            <li>{user.name}</li>
-            <li>{user.email}</li>
-            <li>{user.company.name}</li>
-            <li>{user.phone}</li>
-            <li>{user.website}</li>
-        </ul>
-    )
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nom :
+          <input type="text" onChange={handleChange} />
+        </label>
+        <input type="submit" value="Envoyer" />
+      </form>
+    );
+}
+
+function TextArea(){
+
+  const [text, setText] = React.useState();
+
+  const handleChange = (event) =>{
+    setText(event.target.value);
+  }
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    alert('Le nom a été soumis : ' + text);
+  }
+
+  return(
+    <form onSubmit={handleSubmit}>
+        <label>
+          Essay:
+          <textarea  onChange={handleChange} />
+        </label>
+        <input type="submit" value="Envoyer" />
+    </form>
+  )
+}
+
+function SelectForm(){
+  const [select, setSelect] = React.useState();
+
+  const handleChange = (event) =>{
+    setSelect(event.target.value);
+  }
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    alert('Le nom a été soumis : ' + select);
+  }
+
+  return(
+    <form onSubmit={handleSubmit}>
+        <label>
+          Choisissez votre parfum favori :
+          <select onChange={handleChange}>
+            <option value="grapefruit">Pamplemousse</option>
+            <option value="lime">Citron vert</option>
+            <option value="coconut">Noix de coco</option>
+            <option value="mango">Mangue</option>
+          </select>
+        </label>
+        <input type="submit" value="Envoyer" />
+      </form>
+  )
+}
+
+function App(){
+  return(
+    <React.Fragment>
+      <NameForm />
+      <TextArea />
+      <SelectForm />
+    </React.Fragment> 
+  )
 }
 
 ReactDOM.render(<App/>, document.querySelector('#app'))
