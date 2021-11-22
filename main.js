@@ -8,7 +8,7 @@ function User(){
 
   const [users, setUsers] = React.useState([]);
 
-  console.log(users);
+  //console.log(users);
   
   return(
     <div>
