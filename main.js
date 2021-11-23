@@ -8,36 +8,27 @@ function App(){
 }
 
 function BaseNumberInput(){
-/*
-  const [decimal, setDecimal] = React.useState();
-  const [binaire, setBinaire] = React.useState();
-*/
-  const [inputs, setInputs] = React.useState({
-    decimal : '',
-    binaire : ''
-  })
+
+  const [decimal, setDecimal] = React.useState(0);
+  const [binaire, setBinaire] = React.useState(0);  
 
   const handleChange = (event) => {
-    //setDecimal(event.target.value);
 
-    setInputs({...inputs, decimal: event.target.value})
-    console.log(inputs);
-    setInputs((inputs.decimal-0).toString(2));
-    //console.log((decimal-0).toString(2) + ' le binaire normalement');
-    //console.log(binaire);
+    setDecimal(event.target.value);
+
+    setBinaire((decimal-0).toString(2));
+
   } 
-
-//  console.log(binaire);
-
 
   return(
     <React.Fragment>
-      <label><input type="text" value={inputs.decimal} name="decimal" onChange={handleChange}/></label>
-      <label><input type="text" value={inputs.binaire} name="binaire" /></label>
+      <label><input type="text" value={decimal} name="decimal" onChange={handleChange}/></label>
+
     </React.Fragment>
     
-
   )
 }
+
+// a corriger c'est pas ca du tout
 
 ReactDOM.render(<App />, document.querySelector('#app'));
